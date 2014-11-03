@@ -37,18 +37,8 @@ sourceSets {
 task integTest(type: Test) {
     testClassesDir = sourceSets.integTest.output.classesDir
     classpath = sourceSets.integTest.runtimeClasspath
-    jacoco {
-        //destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
-        destinationFile = file("$buildDir/jacoco/integTest.exec")
-        //classDumpFile = file("$buildDir/jacoco/classpathdumps")
-        classDumpFile = file("$buildDir/classes/integTest")
-
-    }
+    testReportDir = file("$buildDir/reports/integ")
 }
-/*
-task integReport(type: TestReport, dependsOn: integTest) {
-    destinationDir = file("$buildDir/reports/integ")
-    reportOn integTest
-}*/
 
+integTest.mustRunAfter test
 check.dependsOn integTest

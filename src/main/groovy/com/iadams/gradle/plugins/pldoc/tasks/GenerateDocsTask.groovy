@@ -1,5 +1,6 @@
 package com.iadams.gradle.plugins.pldoc.tasks
 
+import static groovy.io.FileType.FILES
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.*
 import net.sourceforge.pldoc.*
@@ -81,7 +82,7 @@ class GenerateDocsTask extends DefaultTask {
         def settings = new Settings()
 
         def inputFiles = []
-        getSourceDir().eachFile{ inputFiles << it.path }
+        getSourceDir().eachFileRecurse(FILES){ inputFiles << it.path }
 
         settings.setApplicationName(getAppName())
         settings.setOutputDirectory(getDestDir())
