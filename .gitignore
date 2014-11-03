@@ -1,0 +1,5 @@
+/.gradle
+/.idea
+/build
+/gradle-pldoc-plugin.iml
+/example

@@ -1,0 +1,54 @@
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply from: "$rootDir/gradle/jacoco.gradle"
+apply from: "$rootDir/gradle/sonar.gradle"
+
+group = 'com.iadams'
+version = '0.1'
+
+description = "Gradle plugin for Pldoc"
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile localGroovy()
+    compile gradleApi()
+    compile "net.sourceforge.pldoc:pldoc:1.5.15"
+
+    testCompile 'com.netflix.nebula:nebula-test:1.12.+'
+}
+
+sourceSets {
+    integTest {
+        groovy.srcDir file('src/integTest/groovy')
+        resources.srcDir file('src/integTest/resources')
+        compileClasspath = sourceSets.main.output + configurations.testRuntime
+        runtimeClasspath = output + compileClasspath
+    }
+}
+
+task integTest(type: Test) {
+    testClassesDir = sourceSets.integTest.output.classesDir
+    classpath = sourceSets.integTest.runtimeClasspath
+    jacoco {
+        //destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        destinationFile = file("$buildDir/jacoco/integTest.exec")
+        //classDumpFile = file("$buildDir/jacoco/classpathdumps")
+        classDumpFile = file("$buildDir/classes/integTest")
+
+    }
+}
+/*
+task integReport(type: TestReport, dependsOn: integTest) {
+    destinationDir = file("$buildDir/reports/integ")
+    reportOn integTest
+}*/
+
+check.dependsOn integTest

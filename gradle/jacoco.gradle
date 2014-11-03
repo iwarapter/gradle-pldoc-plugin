@@ -1,0 +1,11 @@
+apply plugin: "jacoco"
+
+jacocoTestReport {
+
+    executionData = fileTree(dir: "${buildDir}/jacoco", include: 'integTest.exec')
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
+}
