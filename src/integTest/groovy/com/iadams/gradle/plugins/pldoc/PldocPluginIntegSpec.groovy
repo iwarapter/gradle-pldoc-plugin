@@ -30,13 +30,34 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
         when:
             ExecutionResult result = runTasksSuccessfully('pldoc')
+            fileExists("build\\pldoc\\Undefined\\_GLOBAL.html")
 
         then:
             result.standardOutput.contains('1 packages processed successfully.')
     }
 
-    def createSample(String name, File baseDir = projectDir){
-        def path = 'src/main/plsql/' + name.replace('.', '/') + '/Sample1.sql'
+    def 'setup new build and add custom pldoc sourceDir'() {
+        setup:
+            createSample('com.iadams','src/plsql/')
+            buildFile << '''
+                            apply plugin: 'com.iadams.pldoc'
+
+                            pldoc {
+                                sourceDir = new File("${projectDir}/src/plsql")
+                            }
+                        '''.stripIndent()
+
+
+        when:
+            ExecutionResult result = runTasksSuccessfully('pldoc')
+
+        then:
+            result.standardOutput.contains('1 packages processed successfully.')
+            fileExists("build\\pldoc\\Undefined\\_GLOBAL.html")
+    }
+
+    def createSample(String name, String subFolder = 'src/main/plsql/' , File baseDir = projectDir){
+        def path = subFolder + name.replace('.', '/') + '/Sample1.sql'
         def javaFile = createFile(path, baseDir)
         javaFile << """CREATE OR REPLACE FUNCTION betwnstr (
                        string_in   IN   VARCHAR2,
