@@ -3,6 +3,8 @@ Gradle-Pldoc-Plugin
 
 This is a gradle plugin for the [pldoc] tool.
 
+[![Build Status](https://travis-ci.org/iwarapter/gradle-pldoc-plugin.svg?branch=master)](https://travis-ci.org/iwarapter/gradle-pldoc-plugin)
+
 Usage
 -----------
 
