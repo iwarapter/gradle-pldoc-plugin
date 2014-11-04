@@ -30,7 +30,7 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
         when:
             ExecutionResult result = runTasksSuccessfully('pldoc')
-            fileExists("build\\pldoc\\Undefined\\_GLOBAL.html")
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
 
         then:
             result.standardOutput.contains('1 packages processed successfully.')
@@ -53,7 +53,7 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
         then:
             result.standardOutput.contains('1 packages processed successfully.')
-            fileExists("build\\pldoc\\Undefined\\_GLOBAL.html")
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
     }
 
     def createSample(String name, String subFolder = 'src/main/plsql/' , File baseDir = projectDir){
