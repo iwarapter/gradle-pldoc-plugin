@@ -61,6 +61,10 @@ class GenerateDocsTask extends DefaultTask {
     @Optional
     boolean showSkippedPackages
 
+    @Input
+    @Optional
+    String sourceTypes
+
 
     @TaskAction
     void runPldoc() {
@@ -82,7 +86,7 @@ class GenerateDocsTask extends DefaultTask {
         def settings = new Settings()
 
         def inputFiles = []
-        getSourceDir().eachFileRecurse(FILES){ inputFiles << it.path }
+        getSourceDir().eachFileRecurse(FILES){ if(it.name ==~/$sourceTypes/){ inputFiles << it.path} }
 
         settings.setApplicationName(getAppName())
         settings.setOutputDirectory(getDestDir())

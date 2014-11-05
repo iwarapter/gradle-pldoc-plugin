@@ -65,6 +65,7 @@ class PldocPluginIntegSpec extends IntegrationSpec {
                             pldoc {
                                 sourceDir = new File("${projectDir}/src/")
                                 exitOnError = true
+                                sourceTypes = '*'
                             }
                         '''.stripIndent()
             writeHelloWorld('com.iadams')
@@ -74,6 +75,49 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
         then:
             result.failure
+    }
+
+    def 'check the source file types can be set'() {
+        setup:
+            createSample('com.iadams','src/')
+            buildFile << '''
+                            apply plugin: 'com.iadams.pldoc'
+
+                            pldoc {
+                                sourceDir = new File("${projectDir}/src/")
+                                exitOnError = true
+                                sourceTypes = '.*sql'
+                            }
+                        '''.stripIndent()
+            writeHelloWorld('com.iadams')
+
+        when:
+            ExecutionResult result = runTasksSuccessfully('pldoc')
+
+        then:
+            result.standardOutput.contains('1 packages processed successfully.')
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
+    }
+
+    def 'run pldoc twice to check the task is up-to-date'() {
+        setup:
+            createSample('com.iadams','src/main/plsql/')
+            buildFile << '''
+                        apply plugin: 'com.iadams.pldoc'
+                        '''.stripIndent()
+
+        when:
+            ExecutionResult result = runTasksSuccessfully('pldoc')
+
+        then:
+            result.standardOutput.contains('1 packages processed successfully.')
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
+
+        when:
+            result = runTasksSuccessfully('pldoc')
+
+        then:
+            result.wasUpToDate(':pldoc')
     }
 
     def createSample(String name, String subFolder = 'src/main/plsql/' , File baseDir = projectDir){

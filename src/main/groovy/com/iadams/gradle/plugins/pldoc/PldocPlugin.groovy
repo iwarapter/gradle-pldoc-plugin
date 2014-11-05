@@ -46,6 +46,7 @@ class PldocPlugin implements Plugin<Project> {
             conventionMapping.verbose = { extension.verbose }
             conventionMapping.exitOnError = { extension.exitOnError }
             conventionMapping.showSkippedPackages = { extension.showSkippedPackages }
+            conventionMapping.sourceTypes = { extension.sourceTypes }
         }
     }
 }
