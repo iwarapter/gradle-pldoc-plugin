@@ -30,9 +30,9 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
         when:
             ExecutionResult result = runTasksSuccessfully('pldoc')
-            fileExists("build/pldoc/Undefined/_GLOBAL.html")
 
         then:
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
             result.standardOutput.contains('1 packages processed successfully.')
     }
 
@@ -54,6 +54,26 @@ class PldocPluginIntegSpec extends IntegrationSpec {
         then:
             result.standardOutput.contains('1 packages processed successfully.')
             fileExists("build/pldoc/Undefined/_GLOBAL.html")
+    }
+
+    def 'setup a project with other files in the target sourceDir'() {
+        setup:
+            createSample('com.iadams','src/')
+            buildFile << '''
+                            apply plugin: 'com.iadams.pldoc'
+
+                            pldoc {
+                                sourceDir = new File("${projectDir}/src/")
+                                exitOnError = true
+                            }
+                        '''.stripIndent()
+            writeHelloWorld('com.iadams')
+
+        when:
+            ExecutionResult result = runTasksWithFailure('pldoc')
+
+        then:
+            result.failure
     }
 
     def createSample(String name, String subFolder = 'src/main/plsql/' , File baseDir = projectDir){
