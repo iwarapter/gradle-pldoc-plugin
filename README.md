@@ -23,7 +23,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath 'com.iadams:gradle-pldoc-plugin:0.1.1'
+		classpath 'com.iadams:gradle-pldoc-plugin:0.1.2'
 	}
 }
 

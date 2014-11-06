@@ -5,7 +5,7 @@ apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/sonar.gradle"
 
 group = 'com.iadams'
-version = '0.1.1'
+version = '0.1.2'
 
 description = "Gradle plugin for Pldoc"
 
