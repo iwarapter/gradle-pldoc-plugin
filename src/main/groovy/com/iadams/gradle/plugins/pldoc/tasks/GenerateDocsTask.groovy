@@ -14,6 +14,14 @@ class GenerateDocsTask extends DefaultTask {
     @InputDirectory
     File sourceDir
 
+    @Input
+    @Optional
+    String includes
+
+    @Input
+    @Optional
+    String exclusions
+
     @OutputDirectory
     File destDir
 
@@ -69,24 +77,23 @@ class GenerateDocsTask extends DefaultTask {
     @TaskAction
     void runPldoc() {
 
-        logger.debug "AppName " + getAppName()
-        logger.debug "DestDir " + getDestDir()
-        logger.debug "SourceDir " + getSourceDir()
-        logger.debug "StyleSheet " + getStyleSheet()
-        logger.debug "Overview " + getOverview()
-        logger.debug "IgnoreInformalComments " + getIgnoreInformalComments()
-        logger.debug "NamesDefaultCase " + getNamesDefaultCase()
-        logger.debug "NamesUpperCase " + getNamesUpperCase()
-        logger.debug "NamesLowerCase " + getNamesLowerCase()
-        logger.debug "InputEncoding " + getInputEncoding()
-        logger.debug "Verbose " + getVerbose()
-        logger.debug "ExitOnError " + getExitOnError()
-        logger.debug "ShowSkippedPackages " + getShowSkippedPackages()
+        logger.debug "AppName ${getAppName()}"
+        logger.debug "DestDir ${getDestDir()}"
+        logger.debug "SourceDir ${getSourceDir()}"
+        logger.debug "StyleSheet ${getStyleSheet()}"
+        logger.debug "Overview ${getOverview()}"
+        logger.debug "IgnoreInformalComments ${getIgnoreInformalComments()}"
+        logger.debug "NamesDefaultCase ${getNamesDefaultCase()}"
+        logger.debug "NamesUpperCase ${getNamesUpperCase()}"
+        logger.debug "NamesLowerCase ${getNamesLowerCase()}"
+        logger.debug "InputEncoding ${getInputEncoding()}"
+        logger.debug "Verbose ${getVerbose()}"
+        logger.debug "ExitOnError ${getExitOnError()}"
+        logger.debug "ShowSkippedPackages ${getShowSkippedPackages()}"
 
         def settings = new Settings()
 
-        def inputFiles = []
-        getSourceDir().eachFileRecurse(FILES){ if(it.name ==~/$sourceTypes/){ inputFiles << it.path} }
+        def inputFiles = new FileNameFinder().getFileNames(getSourceDir().toString(),getIncludes(),getExclusions())
 
         settings.setApplicationName(getAppName())
         settings.setOutputDirectory(getDestDir())

@@ -3,6 +3,7 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/sonar.gradle"
+apply from: "$rootDir/gradle/groovydoc.gradle"
 
 group = 'com.iadams'
 version = '0.1.2'

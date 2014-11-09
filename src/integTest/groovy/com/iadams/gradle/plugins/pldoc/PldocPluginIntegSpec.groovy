@@ -2,6 +2,7 @@ package com.iadams.gradle.plugins.pldoc
 
 import nebula.test.IntegrationSpec
 import nebula.test.functional.ExecutionResult
+
 /**
  * Created by Iain Adams
  */
@@ -9,6 +10,7 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
     def 'setup new build and check tasks are available'() {
         setup:
+            useToolingApi = false
             buildFile << '''
                     apply plugin: 'com.iadams.pldoc'
                 '''.stripIndent()
@@ -22,6 +24,7 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
     def 'setup new build and call pldoc'() {
         setup:
+            useToolingApi = false
             createSample('com.iadams')
             buildFile << '''
                         apply plugin: 'com.iadams.pldoc'
@@ -38,12 +41,13 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
     def 'setup new build and add custom pldoc sourceDir'() {
         setup:
+            useToolingApi = false
             createSample('com.iadams','src/plsql/')
             buildFile << '''
                             apply plugin: 'com.iadams.pldoc'
 
                             pldoc {
-                                sourceDir = new File("${projectDir}/src/plsql")
+                                sourceDir = "${project.projectDir}/src/plsql"
                             }
                         '''.stripIndent()
 
@@ -58,12 +62,13 @@ class PldocPluginIntegSpec extends IntegrationSpec {
 
     def 'setup a project with other files in the target sourceDir'() {
         setup:
+            useToolingApi = false
             createSample('com.iadams','src/')
             buildFile << '''
                             apply plugin: 'com.iadams.pldoc'
 
                             pldoc {
-                                sourceDir = new File("${projectDir}/src/")
+                                sourceDir = "${project.projectDir}/src"
                                 exitOnError = true
                                 sourceTypes = '*'
                             }
@@ -77,18 +82,19 @@ class PldocPluginIntegSpec extends IntegrationSpec {
             result.failure
     }
 
-    def 'check the source file types can be set'() {
+    def 'filter out files using the exclusions property'() {
         setup:
-            createSample('com.iadams','src/')
+            useToolingApi = false
             buildFile << '''
                             apply plugin: 'com.iadams.pldoc'
 
                             pldoc {
-                                sourceDir = new File("${projectDir}/src/")
+                                sourceDir = "${project.projectDir}/src"
+                                exclusions = '**/*.java'
                                 exitOnError = true
-                                sourceTypes = '.*sql'
                             }
                         '''.stripIndent()
+            createSample('com.iadams','src/')
             writeHelloWorld('com.iadams')
 
         when:
@@ -99,8 +105,56 @@ class PldocPluginIntegSpec extends IntegrationSpec {
             fileExists("build/pldoc/Undefined/_GLOBAL.html")
     }
 
+    def 'filter out files using the includes property'() {
+        setup:
+            useToolingApi = false
+            buildFile << '''
+                            apply plugin: 'com.iadams.pldoc'
+
+                            pldoc {
+                                sourceDir = "${project.projectDir}/src"
+                                includes = '**/*.sql'
+                                exitOnError = true
+                            }
+                        '''.stripIndent()
+            createSample('com.iadams','src/')
+            writeHelloWorld('com.iadams')
+
+        when:
+            ExecutionResult result = runTasksSuccessfully('pldoc')
+
+        then:
+            result.standardOutput.contains('1 packages processed successfully.')
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
+    }
+
+    def 'filter specific directories using the includes property'() {
+        setup:
+            useToolingApi = false
+            buildFile << '''
+                            apply plugin: 'com.iadams.pldoc'
+
+                            pldoc {
+                                sourceDir = "${project.projectDir}/src"
+                                includes = 'com/iadams/*.sql, com/example/*.sql'
+                                exitOnError = true
+                            }
+                        '''.stripIndent()
+            createSample('com.iadams','src/')
+            createSample('com.example','src/')
+            writeHelloWorld('com.iadams')
+
+        when:
+            ExecutionResult result = runTasksSuccessfully('pldoc')
+
+        then:
+            result.standardOutput.contains('2 packages processed successfully.')
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
+    }
+
     def 'run pldoc twice to check the task is up-to-date'() {
         setup:
+            useToolingApi = false
             createSample('com.iadams','src/main/plsql/')
             buildFile << '''
                         apply plugin: 'com.iadams.pldoc'
