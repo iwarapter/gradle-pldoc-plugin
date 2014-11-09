@@ -43,3 +43,9 @@ task integTest(type: Test) {
 
 integTest.mustRunAfter test
 check.dependsOn integTest
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+    // Include the results from the `test` task in all subprojects
+    reportOn test, integTest
+}

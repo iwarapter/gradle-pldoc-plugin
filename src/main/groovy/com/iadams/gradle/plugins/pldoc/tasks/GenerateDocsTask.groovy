@@ -69,27 +69,13 @@ class GenerateDocsTask extends DefaultTask {
     @Optional
     boolean showSkippedPackages
 
-    @Input
-    @Optional
-    String sourceTypes
-
-
     @TaskAction
     void runPldoc() {
 
-        logger.debug "AppName ${getAppName()}"
-        logger.debug "DestDir ${getDestDir()}"
-        logger.debug "SourceDir ${getSourceDir()}"
-        logger.debug "StyleSheet ${getStyleSheet()}"
-        logger.debug "Overview ${getOverview()}"
-        logger.debug "IgnoreInformalComments ${getIgnoreInformalComments()}"
-        logger.debug "NamesDefaultCase ${getNamesDefaultCase()}"
-        logger.debug "NamesUpperCase ${getNamesUpperCase()}"
-        logger.debug "NamesLowerCase ${getNamesLowerCase()}"
-        logger.debug "InputEncoding ${getInputEncoding()}"
-        logger.debug "Verbose ${getVerbose()}"
-        logger.debug "ExitOnError ${getExitOnError()}"
-        logger.debug "ShowSkippedPackages ${getShowSkippedPackages()}"
+        logger.info "SourceDir: ${getSourceDir().absolutePath}"
+        logger.info "DestDir: ${getDestDir().absolutePath}"
+        logger.info "Includes: ${getIncludes()}"
+        logger.info "Exclusions: ${getExclusions()}"
 
         def settings = new Settings()
 

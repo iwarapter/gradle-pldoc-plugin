@@ -23,8 +23,6 @@ class PldocPluginExtension {
     Boolean exitOnError = false
     boolean showSkippedPackages = true
 
-    String sourceTypes = '.*sql|.*pkb|.*pks'
-
     PldocPluginExtension( Project project) {
         sourceDir = "${project.projectDir}/src/main/plsql"
         destDir = "${project.buildDir}/pldoc"
