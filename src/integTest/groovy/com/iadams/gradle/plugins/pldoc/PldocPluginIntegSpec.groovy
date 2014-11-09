@@ -174,6 +174,25 @@ class PldocPluginIntegSpec extends IntegrationSpec {
             result.wasUpToDate(':pldoc')
     }
 
+    def 'setup a test with a stylesheet'() {
+        setup:
+            useToolingApi = false
+            buildFile << '''
+                            apply plugin: 'com.iadams.pldoc'
+                            pldoc {
+                                styleSheet = new File('stylesheet.css')
+                            }
+                        '''.stripIndent()
+            createSample('com.iadams')
+            SupportMethods.CreateStyleSheet("${projectDir}/stylesheet.css")
+        when:
+            ExecutionResult result = runTasksSuccessfully('pldoc')
+
+        then:
+            result.standardOutput.contains('1 packages processed successfully.')
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
+    }
+
     def createSample(String name, String subFolder = 'src/main/plsql/' , File baseDir = projectDir){
         def path = subFolder + name.replace('.', '/') + '/Sample1.sql'
         def javaFile = createFile(path, baseDir)
