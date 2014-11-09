@@ -1,6 +1,5 @@
 package com.iadams.gradle.plugins.pldoc.tasks
 
-import static groovy.io.FileType.FILES
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.*
 import net.sourceforge.pldoc.*
@@ -31,7 +30,7 @@ class GenerateDocsTask extends DefaultTask {
 
     @Input
     @Optional
-    File styleSheet
+    String stylesheet
 
     @Input
     @Optional
@@ -84,7 +83,7 @@ class GenerateDocsTask extends DefaultTask {
         settings.setApplicationName(getAppName())
         settings.setOutputDirectory(getDestDir())
         settings.setInputFiles(inputFiles)
-        settings.setStylesheetfile(getStyleSheet())
+        settings.setStylesheetfile(getStylesheet())
         settings.setOverviewfile(getOverview())
         settings.setIgnoreInformalComments(getIgnoreInformalComments())
         settings.setNamesDefaultcase(getNamesDefaultCase())

@@ -34,7 +34,7 @@ class PldocPluginSpec extends PluginProjectSpec {
             task.appName == "PL/SQL"
             task.destDir == new File("${project.buildDir}/pldoc")
             task.sourceDir == new File("${project.projectDir}/src/main/plsql")
-            task.styleSheet == null
+            task.stylesheet == ''
             task.overview == null
             task.ignoreInformalComments == false
             task.namesDefaultCase == true

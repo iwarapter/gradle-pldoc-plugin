@@ -44,7 +44,7 @@ class PldocPlugin implements Plugin<Project> {
             conventionMapping.exclusions = { extension.exclusions }
             conventionMapping.destDir = { new File(extension.destDir) }
             conventionMapping.appName = { extension.appName }
-            conventionMapping.styleSheet = { extension.styleSheet }
+            conventionMapping.stylesheet = { extension.stylesheet }
             conventionMapping.overview = { extension.overview }
             conventionMapping.ignoreInformalComments = { extension.ignoreInformalComments }
             conventionMapping.namesDefaultCase = { extension.namesDefaultCase }

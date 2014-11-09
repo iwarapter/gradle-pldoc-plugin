@@ -180,7 +180,7 @@ class PldocPluginIntegSpec extends IntegrationSpec {
             buildFile << '''
                             apply plugin: 'com.iadams.pldoc'
                             pldoc {
-                                styleSheet = new File('stylesheet.css')
+                                stylesheet = "${projectDir}/stylesheet.css"
                             }
                         '''.stripIndent()
             createSample('com.iadams')
