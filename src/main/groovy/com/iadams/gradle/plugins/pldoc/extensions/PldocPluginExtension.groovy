@@ -13,7 +13,7 @@ class PldocPluginExtension {
     String exclusions = ''
     String appName = 'PL/SQL'
     String stylesheet = ''
-    File overview = null
+    String overview = ''
     boolean ignoreInformalComments = false
     boolean namesDefaultCase = true
     boolean namesUpperCase = false

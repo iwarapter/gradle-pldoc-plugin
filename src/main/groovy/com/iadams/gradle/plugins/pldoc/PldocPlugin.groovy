@@ -45,7 +45,7 @@ class PldocPlugin implements Plugin<Project> {
             conventionMapping.destDir = { new File(extension.destDir) }
             conventionMapping.appName = { extension.appName }
             conventionMapping.stylesheet = { extension.stylesheet }
-            conventionMapping.overview = { extension.overview }
+            conventionMapping.overview = { if(extension.overview) {new File(extension.overview) } }
             conventionMapping.ignoreInformalComments = { extension.ignoreInformalComments }
             conventionMapping.namesDefaultCase = { extension.namesDefaultCase }
             conventionMapping.namesUpperCase = { extension.namesUpperCase }

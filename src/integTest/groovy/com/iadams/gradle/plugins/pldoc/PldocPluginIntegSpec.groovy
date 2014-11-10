@@ -192,6 +192,26 @@ class PldocPluginIntegSpec extends IntegrationSpec {
             result.standardOutput.contains('1 packages processed successfully.')
             fileExists("build/pldoc/Undefined/_GLOBAL.html")
     }
+    def 'setup a test with a overview'() {
+        setup:
+            useToolingApi = false
+            buildFile << '''
+                            apply plugin: 'com.iadams.pldoc'
+                            pldoc {
+                                overview = "${projectDir}/overview.html"
+                            }
+                        '''.stripIndent()
+            createSample('com.iadams')
+            SupportMethods.CreateOverview("${projectDir}/overview.html")
+
+        when:
+            ExecutionResult result = runTasksSuccessfully('pldoc')
+
+        then:
+            result.standardOutput.contains('1 packages processed successfully.')
+            fileExists("build/pldoc/Undefined/_GLOBAL.html")
+    }
+
 
     def createSample(String name, String subFolder = 'src/main/plsql/' , File baseDir = projectDir){
         def path = subFolder + name.replace('.', '/') + '/Sample1.sql'

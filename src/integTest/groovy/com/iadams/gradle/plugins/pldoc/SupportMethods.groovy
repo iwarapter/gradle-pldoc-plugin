@@ -54,4 +54,20 @@ textarea.CodeFragment   /*{ background-color: #fdf6e3; display:none; font:normal
 .ExpandButton  {  -webkit-border-radius: 5px; -mozilla-border-radius: 5px;  background-color: #EEEEFF; font-size: 8pt; margin:0px; }
         """.stripIndent()
     }
+
+    protected static final CreateOverview(String name){
+        def javaFile = new File(name)
+        javaFile << """<b>Welcome to TheBigApp project documentation page.</b>
+<p/>
+This application can do many things: <br/>
+<ul>
+  <li>Create, update and query customers</li>
+  <li>Read system parameters</li>
+  <li>Write stuff to log</li>
+</ul>
+More things to come, stay tuned ...<br/>
+<br/>
+(this was the content of <span style="font-family: monospace;">overview.html</span>)<br/>
+"""
+    }
 }
