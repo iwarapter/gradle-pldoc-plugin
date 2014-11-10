@@ -1,4 +1,4 @@
-Gradle-Pldoc-Plugin
+Gradle Pldoc Plugin
 =========
 
 This is a gradle plugin for the [pldoc] tool.
@@ -30,19 +30,26 @@ buildscript {
 apply plugin: 'com.iadams.pldoc'
 ```
 
+Tasks
+-----------
+```
+Pldoc tasks
+-----------
+pldoc - Generates documentation using pldoc.
+```
 ## Configuration
 
 ### build.gradle
 ```groovy
-	pldoc {
-		sourceDir = 'src/main/'
-		destDir = 'build/docs'
-		appName = 'MyFancyApp'
-		includes = '**/*'
-	    exclusions = ''
-		stylesheet = 'stylesheet.css'
-		overview = 'overview.html'
-	}
+pldoc {
+	sourceDir = 'src/main/'
+	destDir = 'build/docs'
+	appName = 'MyFancyApp'
+	includes = '**/*'
+    exclusions = ''
+	stylesheet = 'stylesheet.css'
+	overview = 'overview.html'
+}
 ```
 
 * `sourceDir` : Base directory to look for all source files.
