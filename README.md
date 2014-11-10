@@ -35,14 +35,22 @@ apply plugin: 'com.iadams.pldoc'
 ### build.gradle
 ```groovy
 	pldoc {
-		sourceDir = new File("${project.projectDir}/src/main/plsql")
-		destDir = new File("${project.buildDir}/pldoc")
+		sourceDir = 'src/main/'
+		destDir = 'build/docs'
 		appName = 'MyFancyApp'
+		includes = '**/*'
+	    exclusions = ''
+		stylesheet = 'stylesheet.css'
+		overview = 'overview.html'
 	}
 ```
 
-* `sourceDir` : Directory containing all the source file to run pldoc on.
+* `sourceDir` : Base directory to look for all source files.
 * `destDir` : The location to store the generated docs.
 * `appName` :  The name for the generated docs.
+* `includes` : Comma seperated list of files to include.
+* `exclusions` : Comma seperated list of files to ignore.
+* `stylesheet` :  Name of custom stylesheet file.
+* `overview` : Name of a html overview page to include.
 
 [pldoc]:http://pldoc.sourceforge.net/maven-site/
