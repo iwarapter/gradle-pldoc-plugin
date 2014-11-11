@@ -10,8 +10,8 @@ import org.gradle.api.logging.LogLevel
  */
 class GenerateDocsTask extends DefaultTask {
 
-    @InputDirectory
-    File sourceDir
+    @Input
+    String sourceDir
 
     @Input
     @Optional
@@ -71,14 +71,16 @@ class GenerateDocsTask extends DefaultTask {
     @TaskAction
     void runPldoc() {
 
-        logger.info "SourceDir: ${getSourceDir().absolutePath}"
+        inputs.dir(getSourceDir())
+
+        logger.info "SourceDir: ${project.file(getSourceDir())}"
         logger.info "DestDir: ${getDestDir().absolutePath}"
         logger.info "Includes: ${getIncludes()}"
         logger.info "Exclusions: ${getExclusions()}"
 
         def settings = new Settings()
 
-        def inputFiles = new FileNameFinder().getFileNames(getSourceDir().toString(),getIncludes(),getExclusions())
+        def inputFiles = new FileNameFinder().getFileNames(getSourceDir(),getIncludes(),getExclusions())
 
         settings.setApplicationName(getAppName())
         settings.setOutputDirectory(getDestDir())

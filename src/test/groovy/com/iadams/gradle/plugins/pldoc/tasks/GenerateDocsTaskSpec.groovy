@@ -24,7 +24,7 @@ class GenerateDocsTaskSpec extends Specification {
             project.task( 'pltest', type: GenerateDocsTask ){
                 appName = "Big Cheese"
                 destDir = new File('out')
-                sourceDir = new File('in')
+                sourceDir = 'in'
                 styleSheet = new File('stylesheet.css')
                 overview = new File('overview.html')
                 ignoreInformalComments = true
@@ -41,7 +41,7 @@ class GenerateDocsTaskSpec extends Specification {
             Task task = project.tasks.findByName( 'pltest' )
             task.appName == "Big Cheese"
             task.destDir == new File('out')
-            task.sourceDir == new File('in')
+            task.sourceDir == 'in'
             task.styleSheet == new File('stylesheet.css')
             task.overview == new File('overview.html')
             task.ignoreInformalComments == true

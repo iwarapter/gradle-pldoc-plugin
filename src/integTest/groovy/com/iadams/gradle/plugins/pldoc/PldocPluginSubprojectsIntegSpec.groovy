@@ -34,7 +34,8 @@ class PldocPluginSubprojectsIntegSpec extends IntegrationSpec {
                         apply plugin: 'com.iadams.pldoc'
 
                         pldoc {
-                            sourceDir = '.'
+                            sourceDir = "${projectDir}"
+                            includes = '**/*.sql'
                         }
                     '''.stripIndent()
 
@@ -47,7 +48,7 @@ class PldocPluginSubprojectsIntegSpec extends IntegrationSpec {
             ExecutionResult result = runTasksSuccessfully('pldoc')
 
         then:
-            result.standardOutput.contains('1 packages processed successfully.')
+            result.standardOutput.contains('2 packages processed successfully.')
             fileExists("build/pldoc/Undefined/_GLOBAL.html")
     }
 }

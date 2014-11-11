@@ -39,7 +39,7 @@ class PldocPlugin implements Plugin<Project> {
             description = 'Generates documentation using pldoc.'
             group = 'Pldoc'
 
-            conventionMapping.sourceDir = { new File(extension.sourceDir) }
+            conventionMapping.sourceDir = { extension.sourceDir }
             conventionMapping.includes = { extension.includes }
             conventionMapping.exclusions = { extension.exclusions }
             conventionMapping.destDir = { new File(extension.destDir) }
