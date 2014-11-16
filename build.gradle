@@ -38,7 +38,7 @@ sourceSets {
 task integTest(type: Test) {
     testClassesDir = sourceSets.integTest.output.classesDir
     classpath = sourceSets.integTest.runtimeClasspath
-    testReportDir = file("$buildDir/reports/integ")
+    reports.html.destination = file("$buildDir/reports/integ")
 }
 
 integTest.mustRunAfter test
@@ -48,4 +48,9 @@ task testReport(type: TestReport) {
     destinationDir = file("$buildDir/reports/allTests")
     // Include the results from the `test` task in all subprojects
     reportOn test, integTest
+}
+
+task jacocoIntegTestReport(type: JacocoReport) {
+    sourceSets sourceSets.main
+    executionData integTest
 }

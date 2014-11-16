@@ -72,7 +72,7 @@ class GenerateDocsTask extends DefaultTask {
     void runPldoc() {
 
         logger.info "SourceDir: ${project.file(getSourceDir())}"
-        logger.info "DestDir: ${getDestDir().absolutePath}"
+        logger.info "DestDir: ${getDestDir()}"
         logger.info "Includes: ${getIncludes()}"
         logger.info "Exclusions: ${getExclusions()}"
 

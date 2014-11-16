@@ -25,7 +25,7 @@ class GenerateDocsTaskSpec extends Specification {
                 appName = "Big Cheese"
                 destDir = new File('out')
                 sourceDir = 'in'
-                styleSheet = new File('stylesheet.css')
+                stylesheet = 'stylesheet.css'
                 overview = new File('overview.html')
                 ignoreInformalComments = true
                 namesDefaultCase = false
@@ -42,7 +42,7 @@ class GenerateDocsTaskSpec extends Specification {
             task.appName == "Big Cheese"
             task.destDir == new File('out')
             task.sourceDir == 'in'
-            task.styleSheet == new File('stylesheet.css')
+            task.stylesheet == 'stylesheet.css'
             task.overview == new File('overview.html')
             task.ignoreInformalComments == true
             task.namesDefaultCase == false

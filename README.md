@@ -49,6 +49,10 @@ pldoc {
     exclusions = ''
 	stylesheet = 'stylesheet.css'
 	overview = 'overview.html'
+	verbose = false
+	exitOnError = false
+	showSkippedPackages = true
+	ignoreInformalComments = false
 }
 ```
 
@@ -59,5 +63,9 @@ pldoc {
 * `exclusions` : Comma seperated list of files to ignore.
 * `stylesheet` :  Name of custom stylesheet file.
 * `overview` : Name of a html overview page to include.
+* `verbose` : Enables more verbose logging for pldoc (all pldoc output is logged an INFO level.)
+* `exitOnError` : Fails the build in the event of a parsing error.
+* `showSkippedPackages` : Shows the number of skipped packages (when exitOnError is disabled) (all pldoc output is logged an INFO level.)
+* `ignoreInformalComments` : Ignore informal comments when generating documentation.
 
 [pldoc]:http://pldoc.sourceforge.net/maven-site/
